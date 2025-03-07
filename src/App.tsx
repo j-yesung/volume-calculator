@@ -1,12 +1,13 @@
-import GlobalStyle from './styles/global';
+import Router from "./routers";
+import GlobalStyle from "./styles/global";
 
 const App = () => {
-  return (
-    <>
-      <GlobalStyle />
-      <div>App</div>
-    </>
-  );
+	return (
+		<>
+			<GlobalStyle />
+			<Router />
+		</>
+	);
 };
 
 export default App;
