@@ -1,4 +1,4 @@
-import { ROUTE_LIST } from "@/constants/router";
+import { ROUTE_LIST } from "~/constants/router";
 
 import { RouteObject } from "react-router-dom";
 

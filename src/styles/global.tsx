@@ -1,65 +1,81 @@
-import { Global, css } from '@emotion/react';
+import { Global, css } from "@emotion/react";
 
 const baseStyle = css`
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+	@font-face {
+		font-family: "Pretendard";
+		font-weight: 300;
+		src: url("../assets/fonts/Pretendard-Regular.woff") format("woff");
+	}
 
-  html,
-  body {
-    width: 100%;
-    height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-      sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    background-color: #fafafa;
-  }
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
 
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+	html,
+	body {
+		width: 100%;
+		height: 100%;
+		font-family:
+			"Pretendard",
+			-apple-system,
+			BlinkMacSystemFont,
+			"Segoe UI",
+			Roboto,
+			Oxygen,
+			Ubuntu,
+			Cantarell,
+			"Open Sans",
+			"Helvetica Neue",
+			sans-serif;
+		font-size: 16px;
+		line-height: 1.5;
+		background-color: #fafafa;
+	}
 
-  button {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-family: inherit;
-  }
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
 
-  input,
-  textarea {
-    font-family: inherit;
-    outline: none;
-  }
+	button {
+		border: none;
+		background: transparent;
+		cursor: pointer;
+		font-family: inherit;
+	}
 
-  ul,
-  ol {
-    list-style: none;
-  }
+	input,
+	textarea {
+		font-family: inherit;
+		outline: none;
+	}
 
-  img {
-    max-width: 100%;
-    height: auto;
-  }
+	ul,
+	ol {
+		list-style: none;
+	}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-weight: 700;
-    line-height: 1.2;
-  }
+	img {
+		max-width: 100%;
+		height: auto;
+	}
 
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-weight: 700;
+		line-height: 1.2;
+	}
+
+	table {
+		border-collapse: collapse;
+		width: 100%;
+	}
 `;
 
 const GlobalStyle = () => <Global styles={baseStyle} />;
