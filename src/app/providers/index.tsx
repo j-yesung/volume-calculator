@@ -1,15 +1,20 @@
-import GlobalStyle from "@/styles/global";
-
 import { PropsWithChildren } from "react";
 
+import { ThemeProvider } from "@emotion/react";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import GlobalStyle from "~/styles/global";
+import { theme } from "~/styles/theme";
 
 const Provider = ({ children }: PropsWithChildren) => {
 	const queryclinet = new QueryClient();
 	return (
 		<QueryClientProvider client={queryclinet}>
-			<GlobalStyle />
-			{children}
+			<ThemeProvider theme={theme}>
+				<GlobalStyle />
+				{children}
+			</ThemeProvider>
 		</QueryClientProvider>
 	);
 };
