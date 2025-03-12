@@ -1,14 +1,6 @@
 {
 	"plugins": ["@trivago/prettier-plugin-sort-imports"],
-	"importOrder": [
-		"^react(.*)",
-		"^@emotion/(.*)$",
-		"^@tanstack/(.*)$",
-		"^axios$",
-		"^[^@./]",
-		"^~/",
-		"^[./]"
-	],
+	"importOrder": ["^~/", "^[./]"],
 	"importOrderSeparation": true,
 	"importOrderParserPlugins": ["jsx", "typescript"],
 	"printWidth": 100,

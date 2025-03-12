@@ -1,10 +1,11 @@
 import { css } from "@emotion/react";
+import { ButtonHTMLAttributes } from "react";
 
 import { ButtonColorType, theme } from "~/styles/theme";
 
 type ButtonSize = "small" | "medium" | "large";
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;
 	size: ButtonSize;
 	color: keyof ButtonColorType;
