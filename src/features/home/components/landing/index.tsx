@@ -1,6 +1,6 @@
 import * as S from "./style";
 
-const Main = () => {
+const Landing = () => {
 	return (
 		<S.MainWrapper>
 			<S.TitleContainer>
@@ -23,4 +23,4 @@ const Main = () => {
 	);
 };
 
-export default Main;
+export default Landing;

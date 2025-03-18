@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 
-import Button from "~/components/Button";
+import Button from "~/components/ui/button";
 
-const Home = () => {
+const UiTest = () => {
 	return (
 		<div
 			css={css`
@@ -19,4 +19,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default UiTest;

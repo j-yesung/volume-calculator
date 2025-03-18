@@ -1,5 +1,5 @@
 import Provider from "./providers";
-import Router from "./routers";
+import Router from "./router";
 
 const App = () => {
 	return (
