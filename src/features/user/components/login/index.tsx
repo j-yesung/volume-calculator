@@ -16,6 +16,10 @@ const containerStyle = css`
 	.c__button {
 		padding: 18px;
 	}
+
+	.c__input {
+		text-align: center;
+	}
 `;
 
 const checkboxStyle = css`
@@ -40,6 +44,8 @@ const Login = () => {
 		}
 	}, []);
 
+	const isPhoneNumberVaild = phoneNumber.length === 13;
+
 	const formatPhoneNumber = useCallback((value: string): string => {
 		const numbers = value.replace(/[^0-9]/g, "");
 
@@ -56,26 +62,34 @@ const Login = () => {
 		[formatPhoneNumber],
 	);
 
+	const handleLogin = () => {
+		alert(phoneNumber);
+
+		if (isSaved) {
+			localStorage.setItem(PHONE_NUMBER_STORAGE_KEY, phoneNumber);
+		}
+	};
+
 	const handleToggleCheckbox = () => {
+		if (!isPhoneNumberVaild) return;
+
 		if (isSaved) {
 			localStorage.removeItem(PHONE_NUMBER_STORAGE_KEY);
 			setIsSaved(false);
 		} else {
-			if (phoneNumber.length === 13) {
-				localStorage.setItem(PHONE_NUMBER_STORAGE_KEY, phoneNumber);
-				setIsSaved(true);
-			}
+			localStorage.setItem(PHONE_NUMBER_STORAGE_KEY, phoneNumber);
+			setIsSaved(true);
 		}
 	};
 
 	return (
 		<div css={containerStyle}>
 			<PhoneNumberInput onChange={handlePhoneNumberChange} value={phoneNumber} />
-			<Button onClick={() => alert(phoneNumber)} disabled={phoneNumber.length !== 13}>
+			<Button onClick={handleLogin} disabled={!isPhoneNumberVaild}>
 				로그인
 			</Button>
 			<div css={checkboxStyle} onClick={handleToggleCheckbox}>
-				<input type="checkbox" checked={isSaved} disabled={phoneNumber.length !== 13} />
+				<input type="checkbox" checked={isSaved} disabled={!isPhoneNumberVaild} />
 				저장하기
 			</div>
 		</div>

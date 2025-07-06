@@ -2,14 +2,15 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-evenly;
+	justify-content: center;
 	min-height: 100vh;
 	max-width: 500px;
 	width: 100%;
 	padding: 50px;
-	gap: 25px;
+	gap: 10px;
 	margin: 0 auto;
 
 	.c__button {
@@ -21,11 +22,14 @@ export const Title = styled.h1`
 	font-size: 2.5rem;
 	font-weight: bold;
 	color: #333;
-	margin: 0;
+	margin-bottom: 100px;
 `;
 
 export const Caption = styled.div`
 	display: flex;
+	position: absolute;
+	bottom: 20px;
+	padding: 20px;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
