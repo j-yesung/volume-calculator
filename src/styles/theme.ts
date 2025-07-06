@@ -20,7 +20,7 @@ const fontSizes = {
 };
 
 const buttonColors = {
-	primary: "#2ecc71",
+	primary: "#1967DB",
 	secondary: "#3498db",
 	warning: "#f1c40f",
 	danger: "#e74c3c",

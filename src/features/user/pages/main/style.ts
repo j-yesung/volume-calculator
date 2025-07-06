@@ -6,8 +6,11 @@ export const Container = styled.div`
 	align-items: center;
 	justify-content: space-evenly;
 	min-height: 100vh;
+	max-width: 500px;
+	width: 100%;
 	padding: 50px;
 	gap: 25px;
+	margin: 0 auto;
 
 	.c__button {
 		width: 100%;
