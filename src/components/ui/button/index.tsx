@@ -7,9 +7,10 @@ type ButtonSize = "small" | "medium" | "large";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;
-	size: ButtonSize;
-	color: keyof ButtonColorType;
+	size?: ButtonSize;
+	color?: keyof ButtonColorType;
 	disabled?: boolean;
+	className?: string;
 	onClick: () => void;
 }
 
@@ -17,17 +18,14 @@ const sizeStyles = {
 	small: css`
 		padding: 8px 16px;
 		font-size: 14px;
-		border-radius: 20px;
 	`,
 	medium: css`
 		padding: 12px 20px;
 		font-size: 16px;
-		border-radius: 24px;
 	`,
 	large: css`
 		padding: 16px 24px;
 		font-size: 18px;
-		border-radius: 28px;
 	`,
 };
 
@@ -60,6 +58,7 @@ const baseStyle = css`
 	transition: all 0.2s ease-in-out;
 	outline: none;
 	font-weight: 600;
+	border-radius: 10px;
 
 	&:hover {
 		opacity: 0.9;
@@ -77,9 +76,17 @@ const baseStyle = css`
 	}
 `;
 
-const Button = ({ children, color, size, disabled, onClick }: ButtonProps) => {
+const Button = ({
+	children,
+	color = "primary",
+	size = "small",
+	disabled,
+	className,
+	onClick,
+}: ButtonProps) => {
 	return (
 		<button
+			className={`c__button ${className ?? ""}`}
 			css={[baseStyle, sizeStyles[size], colorStyles[color]]}
 			onClick={onClick}
 			disabled={disabled}
