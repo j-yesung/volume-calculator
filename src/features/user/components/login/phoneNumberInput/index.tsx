@@ -21,7 +21,7 @@ const PhoneNumberInput = ({ onChange, value }: Props) => {
 			css={phoneNumberInputStyle}
 			value={value}
 			onChange={onChange}
-			placeholder="전화번호를 입력해 주세요."
+			placeholder="핸드폰 번호를 입력해 주세요."
 			maxLength={13}
 		/>
 	);

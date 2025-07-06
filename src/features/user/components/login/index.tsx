@@ -1,34 +1,9 @@
-import { css } from "@emotion/react";
 import { useCallback, useEffect, useState } from "react";
 
 import { Button } from "~/components/ui";
 
 import PhoneNumberInput from "./phoneNumberInput";
-
-const containerStyle = css`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	gap: 16px;
-
-	.c__button {
-		padding: 18px;
-	}
-
-	.c__input {
-		text-align: center;
-	}
-`;
-
-const checkboxStyle = css`
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	font-size: 14px;
-	cursor: pointer;
-`;
+import * as S from "./style";
 
 const PHONE_NUMBER_STORAGE_KEY = "my_phone_number";
 
@@ -83,16 +58,16 @@ const Login = () => {
 	};
 
 	return (
-		<div css={containerStyle}>
+		<S.Container>
 			<PhoneNumberInput onChange={handlePhoneNumberChange} value={phoneNumber} />
 			<Button onClick={handleLogin} disabled={!isPhoneNumberVaild}>
 				로그인
 			</Button>
-			<div css={checkboxStyle} onClick={handleToggleCheckbox}>
+			<S.Checkbox onClick={handleToggleCheckbox}>
 				<input type="checkbox" checked={isSaved} disabled={!isPhoneNumberVaild} />
-				저장하기
-			</div>
-		</div>
+				핸드폰 번호 저장하기
+			</S.Checkbox>
+		</S.Container>
 	);
 };
 
