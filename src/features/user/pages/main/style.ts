@@ -24,7 +24,7 @@ export const Title = styled.h1`
 	margin: 0;
 `;
 
-export const Caption = styled.p`
+export const Caption = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;

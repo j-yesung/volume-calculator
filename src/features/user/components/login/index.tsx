@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
+import { useState } from "react";
 
-import { Button } from "~/components/ui";
+import { Button, Input } from "~/components/ui";
 
 const containerStyle = css`
 	display: flex;
@@ -31,12 +32,20 @@ const checkboxStyle = css`
 `;
 
 const Login = () => {
+	const [phoneNumber, setPhoneNumber] = useState("");
+
+	const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		setPhoneNumber(value);
+	};
+
 	return (
 		<>
 			<div css={containerStyle}>
-				<input
+				<Input
 					css={phoneNumberInputStyle}
-					type="text"
+					value={phoneNumber}
+					onChange={handlePhoneNumberChange}
 					placeholder="전화번호를 입력해 주세요."
 				/>
 				<Button onClick={() => {}}>로그인</Button>
