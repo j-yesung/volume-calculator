@@ -1,10 +1,10 @@
 import { RouteObject } from "react-router-dom";
 
-import Home from "~/features/home";
+import Main from "~/features/user/pages/main";
 
 export const ROUTE_LIST: RouteObject[] = [
 	{
 		path: "/",
-		element: <Home />,
+		element: <Main />,
 	},
 ];
