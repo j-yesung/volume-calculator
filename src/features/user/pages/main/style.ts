@@ -9,7 +9,7 @@ export const Container = styled.div`
 	min-height: 100vh;
 	max-width: 500px;
 	width: 100%;
-	padding: 50px;
+	padding: 30px;
 	gap: 10px;
 	margin: 0 auto;
 

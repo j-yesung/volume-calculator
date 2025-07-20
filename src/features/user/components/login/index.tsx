@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "~/components/ui";
 
@@ -11,6 +12,8 @@ const Login = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [isSaved, setIsSaved] = useState(false);
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		const savedPhoneNumber = localStorage.getItem(PHONE_NUMBER_STORAGE_KEY);
 		if (savedPhoneNumber) {
@@ -21,7 +24,7 @@ const Login = () => {
 
 	const isPhoneNumberVaild = phoneNumber.length === 13;
 
-	const formatPhoneNumber = useCallback((value: string): string => {
+	const formatPhoneNumber = useCallback((value: string) => {
 		const numbers = value.replace(/[^0-9]/g, "");
 
 		if (numbers.length <= 3) return numbers;
@@ -43,6 +46,8 @@ const Login = () => {
 		if (isSaved) {
 			localStorage.setItem(PHONE_NUMBER_STORAGE_KEY, phoneNumber);
 		}
+
+		navigate("/calculator");
 	};
 
 	const handleToggleCheckbox = () => {
