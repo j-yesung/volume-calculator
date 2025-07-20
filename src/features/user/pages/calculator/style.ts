@@ -32,3 +32,13 @@ export const Content = styled.div`
 	padding: 12px;
 	box-sizing: border-box;
 `;
+
+export const ButtonWrapper = styled.div`
+	display: flex;
+	gap: 8px;
+	width: 100%;
+
+	.c__button {
+		width: 100%;
+	}
+`;

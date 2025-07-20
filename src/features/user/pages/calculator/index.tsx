@@ -1,3 +1,5 @@
+import { Button } from "~/components/ui";
+
 import InputSection from "../../components/calculator/inputSection";
 import { useCalculatorInput } from "../../hooks/useCalculatorInput";
 import * as S from "./style";
@@ -21,9 +23,8 @@ const Calculator = () => {
 	return (
 		<S.CalculatorContainer>
 			{inputList.map((list) => (
-				<S.DisplayWrapper $shouldFlex={list.shouldFlex}>
+				<S.DisplayWrapper key={list.id} $shouldFlex={list.shouldFlex}>
 					<InputSection
-						key={list.id}
 						title={list.title}
 						value={inputs[list.id].value}
 						placeholder={inputs[list.id].placeholder}
@@ -39,6 +40,14 @@ const Calculator = () => {
 				<S.Content></S.Content>
 				<S.Content></S.Content>
 			</S.DisplayWrapper>
+			<S.ButtonWrapper>
+				<Button onClick={() => {}} size="medium" color="danger">
+					초기화
+				</Button>
+				<Button onClick={() => {}} size="medium">
+					계산하기
+				</Button>
+			</S.ButtonWrapper>
 		</S.CalculatorContainer>
 	);
 };

@@ -57,7 +57,7 @@ const baseStyle = css`
 	cursor: pointer;
 	transition: all 0.2s ease-in-out;
 	outline: none;
-	font-weight: 600;
+	font-weight: 500;
 	border-radius: 10px;
 
 	&:hover {
