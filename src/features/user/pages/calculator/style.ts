@@ -32,36 +32,3 @@ export const Content = styled.div`
 	padding: 12px;
 	box-sizing: border-box;
 `;
-
-export const MaterialsContainer = styled.div`
-	margin-top: 8px;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 6px;
-	max-height: 200px;
-	overflow-y: auto;
-`;
-
-export const MaterialTag = styled.span`
-	display: inline-flex;
-	align-items: center;
-	padding: 4px 8px;
-	background-color: #f3f4f6;
-	border: 1px solid #d1d5db;
-	border-radius: 12px;
-	font-size: 12px;
-	color: #374151;
-	font-weight: 500;
-	white-space: nowrap;
-`;
-
-export const Materials = styled.div`
-	margin-top: 8px;
-	padding: 12px;
-	background-color: #f0f9ff;
-	border: 1px solid #0ea5e9;
-	border-radius: 4px;
-	font-size: 14px;
-	color: #0c4a6e;
-	font-weight: 500;
-`;

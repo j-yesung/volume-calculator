@@ -1,50 +1,42 @@
-import { useState } from "react";
-
-import { Input } from "~/components/ui";
-
+import InputSection from "../../components/calculator/inputSection";
+import { useCalculatorInput } from "../../hooks/useCalculatorInput";
 import * as S from "./style";
 
 const Calculator = () => {
-	const [material, setMaterial] = useState("");
-	const [forwardingMaterials, setForwardingMaterials] = useState<string[]>([]);
+	const { inputs, updateValue, addItem, removeItem } = useCalculatorInput();
 
-	const handleSubmit = () => {
-		if (material.trim()) {
-			setForwardingMaterials((prev) => [...prev, material]);
-			setMaterial("");
-		}
-	};
-
-	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter") {
-			handleSubmit();
-		}
-	};
+	const inputList = [
+		{
+			id: "material",
+			title: "출고된 자재",
+			shouldFlex: false,
+		},
+		{
+			id: "cuttingQuantity",
+			title: "재단 수량",
+			shouldFlex: false,
+		},
+	];
 
 	return (
 		<S.CalculatorContainer>
-			<S.DisplayWrapper $shouldFlex={false}>
-				<span>출고된 자재</span>
-				<Input
-					onChange={(e) => setMaterial(e.target.value)}
-					onEnter={handleKeyPress}
-					value={material}
-					placeholder="자재를 입력해 주세요."
-				/>
-				{forwardingMaterials.length > 0 && (
-					<S.MaterialsContainer>
-						{forwardingMaterials.map((material, index) => (
-							<S.MaterialTag key={index}>{material}</S.MaterialTag>
-						))}
-					</S.MaterialsContainer>
-				)}
-			</S.DisplayWrapper>
-			<S.DisplayWrapper $shouldFlex>
-				<span>재단 수량</span>
-				<S.Content></S.Content>
-			</S.DisplayWrapper>
+			{inputList.map((list) => (
+				<S.DisplayWrapper $shouldFlex={list.shouldFlex}>
+					<InputSection
+						key={list.id}
+						title={list.title}
+						value={inputs[list.id].value}
+						placeholder={inputs[list.id].placeholder}
+						items={inputs[list.id].items}
+						onChange={(value) => updateValue(list.id, value)}
+						onSubmit={() => addItem(list.id)}
+						onRemoveItem={(index) => removeItem(list.id, index)}
+					/>
+				</S.DisplayWrapper>
+			))}
 			<S.DisplayWrapper $shouldFlex>
 				<span>계산 결과 및 잔량</span>
+				<S.Content></S.Content>
 				<S.Content></S.Content>
 			</S.DisplayWrapper>
 		</S.CalculatorContainer>
