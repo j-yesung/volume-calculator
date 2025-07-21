@@ -1,11 +1,10 @@
-import { Button } from "~/components/ui";
-
+import ActionButtons from "../../components/calculator/actionButtons";
 import InputSection from "../../components/calculator/inputSection";
-import { useCalculatorInput } from "../../hooks/useCalculatorInput";
+import { useCalculator } from "../../hooks/useCalculator";
 import * as S from "./style";
 
 const Calculator = () => {
-	const { inputs, updateValue, addItem, removeItem } = useCalculatorInput();
+	const { inputs, updateValue, addItem, removeItem, resetCalculator } = useCalculator();
 
 	const inputList = [
 		{
@@ -41,12 +40,13 @@ const Calculator = () => {
 				<S.Content></S.Content>
 			</S.DisplayWrapper>
 			<S.ButtonWrapper>
-				<Button onClick={() => {}} size="medium" color="danger">
-					초기화
-				</Button>
-				<Button onClick={() => {}} size="medium">
-					계산하기
-				</Button>
+				<ActionButtons
+					items={{
+						cuttingQuantityItems: inputs.cuttingQuantity.items,
+						materialItems: inputs.material.items,
+					}}
+					onReset={resetCalculator}
+				/>
 			</S.ButtonWrapper>
 		</S.CalculatorContainer>
 	);

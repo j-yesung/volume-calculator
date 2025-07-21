@@ -7,21 +7,23 @@ interface InputField {
 	items: string[];
 }
 
-export const useCalculatorInput = () => {
-	const [inputs, setInputs] = useState<Record<string, InputField>>({
-		material: {
-			id: "material",
-			value: "",
-			placeholder: "자재를 입력해 주세요.",
-			items: [],
-		},
-		cuttingQuantity: {
-			id: "cuttingQuantity",
-			value: "",
-			placeholder: "재단 수량을 입력해 주세요.",
-			items: [],
-		},
-	});
+const initialInputs = {
+	material: {
+		id: "material",
+		value: "",
+		placeholder: "자재를 입력해 주세요.",
+		items: [],
+	},
+	cuttingQuantity: {
+		id: "cuttingQuantity",
+		value: "",
+		placeholder: "재단 수량을 입력해 주세요.",
+		items: [],
+	},
+};
+
+export const useCalculator = () => {
+	const [inputs, setInputs] = useState<Record<string, InputField>>(initialInputs);
 
 	const updateValue = (id: string, value: string) => {
 		setInputs((prev) => ({
@@ -54,10 +56,15 @@ export const useCalculatorInput = () => {
 		}));
 	};
 
+	const resetCalculator = () => {
+		setInputs(initialInputs);
+	};
+
 	return {
 		inputs,
 		updateValue,
 		addItem,
 		removeItem,
+		resetCalculator,
 	};
 };
