@@ -1,10 +1,10 @@
 import ActionButtons from "../../components/calculator/actionButtons";
 import InputSection from "../../components/calculator/inputSection";
-import { useCalculator } from "../../hooks/useCalculator";
+import { useInteriorItem } from "../../hooks/useInteriorItem";
 import * as S from "./style";
 
 const Calculator = () => {
-	const { inputs, updateValue, addItem, removeItem, resetCalculator } = useCalculator();
+	const { inputs, updateValue, addItem, removeItem, resetCalculator } = useInteriorItem();
 
 	const inputList = [
 		{
