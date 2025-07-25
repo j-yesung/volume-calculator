@@ -3,14 +3,14 @@ import { useState } from "react";
 import { InputFieldKey, CalculatorInputs } from "../types/items";
 
 const initialInputs = {
-	material: {
-		id: "material",
+	materials: {
+		id: "materials",
 		value: "",
 		placeholder: "자재를 입력해 주세요.",
 		items: [],
 	},
-	cuttingQuantity: {
-		id: "cuttingQuantity",
+	cutQty: {
+		id: "cutQty",
 		value: "",
 		placeholder: "재단 수량을 입력해 주세요.",
 		items: [],

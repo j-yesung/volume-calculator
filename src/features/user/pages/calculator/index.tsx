@@ -1,19 +1,20 @@
 import ActionButtons from "../../components/calculator/actionButtons";
 import InputSection from "../../components/calculator/inputSection";
 import { useInteriorItem } from "../../hooks/useInteriorItem";
+import { CalculatorInputList } from "../../types/items";
 import * as S from "./style";
 
 const Calculator = () => {
 	const { inputs, updateValue, addItem, removeItem, resetCalculator } = useInteriorItem();
 
-	const inputList = [
+	const inputList: CalculatorInputList[] = [
 		{
-			id: "material",
+			id: "materials",
 			title: "출고된 자재",
 			shouldFlex: false,
 		},
 		{
-			id: "cuttingQuantity",
+			id: "cutQty",
 			title: "재단 수량",
 			shouldFlex: false,
 		},
@@ -42,8 +43,8 @@ const Calculator = () => {
 			<S.ButtonWrapper>
 				<ActionButtons
 					items={{
-						cuttingQuantityItems: inputs.cuttingQuantity.items,
-						materialItems: inputs.material.items,
+						materials: inputs.materials.items,
+						cutQty: inputs.cutQty.items,
 					}}
 					onReset={resetCalculator}
 				/>
