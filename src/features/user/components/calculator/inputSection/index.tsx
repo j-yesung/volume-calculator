@@ -35,6 +35,7 @@ const InputSection = ({
 				onEnter={handleKeyPress}
 				value={value}
 				placeholder={placeholder}
+				inputMode="numeric"
 			/>
 			{items.length > 0 && (
 				<S.TagWrapper>

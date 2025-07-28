@@ -18,13 +18,13 @@ const ActionButtons = ({ items, onReset }: Props) => {
 		console.log("======== 계산 결과 ========");
 		result.results.forEach((res, idx) => {
 			console.log(
-				`#${idx + 1} 📦 재료 ${res.usedMaterial} → 컷팅 ${res.matchedCut.join(" + ")} (로스: ${res.loss})`,
+				`#${idx + 1} A (${res.usedMaterial}) → B (${res.matchedCut.join(" + ")}) (loss: ${res.loss})`,
 			);
 		});
 
 		console.log("총 로스량:", result.totalLoss);
 		console.log("남은 재료:", result.remainingMaterials);
-		console.log("소거되지 않은 컷팅값:", result.unusedCut);
+		console.log("소거되지 않은 B:", result.unusedCut);
 	};
 
 	return (

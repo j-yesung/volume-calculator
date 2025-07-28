@@ -19,7 +19,7 @@ type CalculationOutput = {
 export const useCalculator = () => {
 	const toNumbers = (arr: string[]): number[] => arr.map(parseFloat).filter((n) => !isNaN(n));
 
-	// B의 모든 조합 구성: 값은 같아도 인덱스를 유지한 조합으로 생성
+	// B 인덱스 기준 모든 조합 생성 (긴 조합 우선)
 	const getIndexCombinations = (indexes: number[]) => {
 		const result: number[][] = [];
 		const dfs = (start: number, path: number[]) => {
@@ -29,20 +29,33 @@ export const useCalculator = () => {
 			}
 		};
 		dfs(0, []);
-		return result.sort((a, b) => b.length - a.length); // 긴 조합 우선
+		return result.sort((a, b) => b.length - a.length);
 	};
 
 	const calculate = (input: InputFieldItems): CalculationOutput => {
 		const materials = toNumbers(input.materials).sort((a, b) => a - b);
 		const cutQtys = toNumbers(input.cutQty);
 
-		const usedCutIndexes = new Set<number>(); // 사용된 B 인덱스 추적
+		const sumMaterials = materials.reduce((acc, val) => acc + val, 0);
+		const sumCutQtys = cutQtys.reduce((acc, val) => acc + val, 0);
+
+		if (sumMaterials < sumCutQtys) {
+			alert("A의 총합이 B의 총합보다 작습니다. 입력값을 확인하세요.");
+			return {
+				results: [],
+				totalLoss: 0,
+				remainingMaterials: [],
+				unusedCut: cutQtys,
+			};
+		}
+
+		const usedCutIndexes = new Set<number>();
 		const results: MatchingResult[] = [];
 		const remainingMaterials: number[] = [];
 		let totalLoss = 0;
 
 		for (const material of materials) {
-			// 사용되지 않은 B 인덱스 추출
+			// 남은 B 인덱스
 			const availableIndexes = cutQtys
 				.map((_, idx) => idx)
 				.filter((idx) => !usedCutIndexes.has(idx));
@@ -83,12 +96,46 @@ export const useCalculator = () => {
 				if (matched) break;
 			}
 
+			// 조건 1~3에 실패한 경우 조건 4, 5 시도
+			if (!matched) {
+				for (const comboIndexes of indexCombinations) {
+					const comboValues = comboIndexes.map((idx) => cutQtys[idx]);
+					const comboSum = comboValues.reduce((acc, val) => acc + val, 0);
+					const loss = parseFloat((material - comboSum).toFixed(3));
+
+					// 조건 4: (로스로 인정하고 컷팅 처리
+					if (loss > 0 && loss <= 1.9) {
+						comboIndexes.forEach((idx) => usedCutIndexes.add(idx));
+
+						results.push({
+							usedMaterial: material,
+							matchedCut: comboValues,
+							loss,
+						});
+
+						totalLoss += loss;
+						matched = true;
+						break;
+					}
+
+					// 조건 5: 잔량으로 저장, 컷팅 처리 안 함
+					if (loss >= 2 && loss <= 3.4) {
+						// 컷팅하지 않고 A를 잔량 처리
+						remainingMaterials.push(material);
+						matched = true;
+						break;
+					}
+				}
+			}
+
+			// 조건 1~5 모두 실패하면 A를 잔량으로 저장
 			if (!matched) {
 				remainingMaterials.push(material);
 			}
 		}
 
-		const unusedCut = cutQtys.filter((_v, idx) => !usedCutIndexes.has(idx));
+		// 사용되지 않은 B
+		const unusedCut = cutQtys.filter((_, idx) => !usedCutIndexes.has(idx));
 
 		return {
 			results,
