@@ -1,20 +1,4 @@
-type InputFieldItems = {
-	materials: string[]; // 출고된 자재 A
-	cutQty: string[]; // 재단 수량 B
-};
-
-type MatchingResult = {
-	usedMaterial: number;
-	matchedCut: number[];
-	loss: number;
-};
-
-type CalculationOutput = {
-	results: MatchingResult[]; // A와 B의 매칭 결과
-	totalLoss: number; // 총 로스량
-	remainingMaterials: number[]; // 컷팅 불가 잔량 A
-	unusedCut: number[]; // 사용되지 않은 B
-};
+import { InputFieldItems, CalculationOutput, MatchingResult } from "../types/items";
 
 export const useCalculator = () => {
 	const toNumbers = (arr: string[]): number[] => arr.map(parseFloat).filter((n) => !isNaN(n));
@@ -40,7 +24,7 @@ export const useCalculator = () => {
 		const sumCutQtys = cutQtys.reduce((acc, val) => acc + val, 0);
 
 		if (sumMaterials < sumCutQtys) {
-			alert("A의 총합이 B의 총합보다 작습니다. 입력값을 확인하세요.");
+			alert("출고된 자재가 재단 수량보다 적습니다.");
 			return {
 				results: [],
 				totalLoss: 0,
