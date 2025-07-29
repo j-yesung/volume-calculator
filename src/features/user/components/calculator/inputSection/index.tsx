@@ -33,6 +33,7 @@ const InputSection = ({
 			<Input
 				onChange={(e) => onChange(e.target.value)}
 				onEnter={handleKeyPress}
+				onBlur={onSubmit}
 				value={value}
 				placeholder={placeholder}
 				inputMode="numeric"
