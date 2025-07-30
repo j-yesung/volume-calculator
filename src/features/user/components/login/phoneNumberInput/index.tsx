@@ -6,8 +6,6 @@ const phoneNumberInputStyle = css`
 	width: 100%;
 	padding: 12px;
 	border-radius: 10px;
-	border: none;
-	background-color: #d9d9d9;
 `;
 
 type Props = {
@@ -22,6 +20,7 @@ const PhoneNumberInput = ({ onChange, value }: Props) => {
 			value={value}
 			onChange={onChange}
 			placeholder="핸드폰 번호를 입력해 주세요."
+			inputMode="numeric"
 			maxLength={13}
 		/>
 	);

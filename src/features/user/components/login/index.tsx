@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useToast } from "~/app/providers/ToastProvider";
 import { Button } from "~/components/ui";
 
 import PhoneNumberInput from "./phoneNumberInput";
@@ -13,6 +14,7 @@ const Login = () => {
 	const [isSaved, setIsSaved] = useState(false);
 
 	const navigate = useNavigate();
+	const { showToast } = useToast();
 
 	useEffect(() => {
 		const savedPhoneNumber = localStorage.getItem(PHONE_NUMBER_STORAGE_KEY);
@@ -22,7 +24,7 @@ const Login = () => {
 		}
 	}, []);
 
-	const isPhoneNumberVaild = phoneNumber.length === 13;
+	const isPhoneNumberValid = phoneNumber.length === 13;
 
 	const formatPhoneNumber = useCallback((value: string) => {
 		const numbers = value.replace(/[^0-9]/g, "");
@@ -41,7 +43,7 @@ const Login = () => {
 	);
 
 	const handleLogin = () => {
-		alert(phoneNumber);
+		showToast(`${phoneNumber}로 로그인 했어요.`, 2000);
 
 		if (isSaved) {
 			localStorage.setItem(PHONE_NUMBER_STORAGE_KEY, phoneNumber);
@@ -51,7 +53,7 @@ const Login = () => {
 	};
 
 	const handleToggleCheckbox = () => {
-		if (!isPhoneNumberVaild) return;
+		if (!isPhoneNumberValid) return;
 
 		if (isSaved) {
 			localStorage.removeItem(PHONE_NUMBER_STORAGE_KEY);
@@ -65,11 +67,11 @@ const Login = () => {
 	return (
 		<S.Container>
 			<PhoneNumberInput onChange={handlePhoneNumberChange} value={phoneNumber} />
-			<Button onClick={handleLogin} disabled={!isPhoneNumberVaild}>
+			<Button onClick={handleLogin} disabled={!isPhoneNumberValid}>
 				로그인
 			</Button>
 			<S.Checkbox onClick={handleToggleCheckbox}>
-				<input type="checkbox" checked={isSaved} disabled={!isPhoneNumberVaild} />
+				<input type="checkbox" checked={isSaved} disabled={!isPhoneNumberValid} />
 				핸드폰 번호 저장하기
 			</S.Checkbox>
 		</S.Container>
