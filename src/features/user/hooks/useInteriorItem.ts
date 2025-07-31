@@ -21,7 +21,13 @@ export const useInteriorItem = () => {
 	const [inputs, setInputs] = useState<CalculatorInputs>(initialInputs);
 
 	const updateValue = (id: InputFieldKey, value: string) => {
-		const onlyNumber = value.replace(/[^0-9]/g, "");
+		let onlyNumber = value.replace(/[^0-9.]/g, "");
+		const parts = onlyNumber.split(".");
+		if (parts.length > 2) {
+			onlyNumber = parts[0] + "." + parts.slice(1).join("").replace(/\./g, "");
+		} else if (parts.length === 2) {
+			onlyNumber = parts[0] + "." + parts[1];
+		}
 		setInputs((prev) => ({
 			...prev,
 			[id]: { ...prev[id], value: onlyNumber },
