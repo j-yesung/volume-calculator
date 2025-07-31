@@ -43,7 +43,7 @@ const fontColors = {
 };
 
 const buttonColors = {
-	primary: "#1967DB",
+	primary: "#0B203B",
 	secondary: "#3498db",
 	warning: "#f1c40f",
 	danger: "#e74c3c",

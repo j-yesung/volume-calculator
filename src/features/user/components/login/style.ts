@@ -21,9 +21,13 @@ export const Checkbox = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	font-size: 14px;
 	cursor: pointer;
 	user-select: none;
+
+	p {
+		font-size: 14px;
+		color: ${({ theme }) => theme.fontColors.secondary};
+	}
 
 	input[type="checkbox"] {
 		width: 18px;

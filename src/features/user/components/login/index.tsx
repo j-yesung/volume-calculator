@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useToast } from "~/app/providers/ToastProvider";
 import { Button } from "~/components/ui";
 
 import PhoneNumberInput from "./phoneNumberInput";
@@ -13,6 +14,7 @@ const Login = () => {
 	const [isSaved, setIsSaved] = useState(false);
 
 	const navigate = useNavigate();
+	const showToast = useToast().showToast;
 
 	useEffect(() => {
 		const savedPhoneNumber = localStorage.getItem(PHONE_NUMBER_STORAGE_KEY);
@@ -22,36 +24,19 @@ const Login = () => {
 		}
 	}, []);
 
-	const isPhoneNumberVaild = phoneNumber.length === 13;
-
-	const formatPhoneNumber = useCallback((value: string) => {
-		const numbers = value.replace(/[^0-9]/g, "");
-
-		if (numbers.length <= 3) return numbers;
-		if (numbers.length <= 7) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
-		return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
-	}, []);
-
-	const handlePhoneNumberChange = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) => {
-			const formattedValue = formatPhoneNumber(e.target.value);
-			setPhoneNumber(formattedValue);
-		},
-		[formatPhoneNumber],
-	);
+	const isPhoneNumberValid = phoneNumber.length === 13;
 
 	const handleLogin = () => {
-		alert(phoneNumber);
-
 		if (isSaved) {
 			localStorage.setItem(PHONE_NUMBER_STORAGE_KEY, phoneNumber);
 		}
 
+		showToast(`${phoneNumber}로 로그인 했어요`, 2000);
 		navigate("/calculator");
 	};
 
 	const handleToggleCheckbox = () => {
-		if (!isPhoneNumberVaild) return;
+		if (!isPhoneNumberValid) return;
 
 		if (isSaved) {
 			localStorage.removeItem(PHONE_NUMBER_STORAGE_KEY);
@@ -64,13 +49,13 @@ const Login = () => {
 
 	return (
 		<S.Container>
-			<PhoneNumberInput onChange={handlePhoneNumberChange} value={phoneNumber} />
-			<Button onClick={handleLogin} disabled={!isPhoneNumberVaild}>
+			<PhoneNumberInput onChange={setPhoneNumber} value={phoneNumber} />
+			<Button onClick={handleLogin} disabled={!isPhoneNumberValid}>
 				로그인
 			</Button>
 			<S.Checkbox onClick={handleToggleCheckbox}>
-				<input type="checkbox" checked={isSaved} disabled={!isPhoneNumberVaild} />
-				핸드폰 번호 저장하기
+				<input type="checkbox" checked={isSaved} disabled={!isPhoneNumberValid} />
+				<p>핸드폰 번호 저장할게요</p>
 			</S.Checkbox>
 		</S.Container>
 	);

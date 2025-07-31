@@ -24,7 +24,7 @@ export const useCalculator = () => {
 		const sumCutQtys = cutQtys.reduce((acc, val) => acc + val, 0);
 
 		if (sumMaterials < sumCutQtys) {
-			alert("출고된 자재가 재단 수량보다 적습니다.");
+			alert("출고된 자재가 재단 수량보다 적어요");
 			return {
 				results: [],
 				totalLoss: 0,
