@@ -15,14 +15,14 @@ export const useToast = () => {
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
 	const [visible, setVisible] = useState(false);
 	const [message, setMessage] = useState("");
-	const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+	const [timer, setTimer] = useState<number>(0);
 
 	const showToast = useCallback(
 		(msg: string, duration = 1500) => {
 			setMessage(msg);
 			setVisible(true);
-			if (timer) clearTimeout(timer);
-			const t = setTimeout(() => setVisible(false), duration);
+			if (timer !== null) clearTimeout(timer);
+			const t = window.setTimeout(() => setVisible(false), duration);
 			setTimer(t);
 		},
 		[timer],
