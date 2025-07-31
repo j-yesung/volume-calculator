@@ -36,7 +36,6 @@ const InputSection = ({
 				onBlur={onSubmit}
 				value={value}
 				placeholder={placeholder}
-				inputMode="numeric"
 			/>
 			{items.length > 0 && (
 				<S.TagWrapper>
