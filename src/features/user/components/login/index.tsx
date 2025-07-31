@@ -31,7 +31,7 @@ const Login = () => {
 			localStorage.setItem(PHONE_NUMBER_STORAGE_KEY, phoneNumber);
 		}
 
-		showToast(`${phoneNumber}로 로그인 했어요.`, 2000);
+		showToast(`${phoneNumber}로 로그인 했어요`, 2000);
 		navigate("/calculator");
 	};
 
@@ -51,11 +51,11 @@ const Login = () => {
 		<S.Container>
 			<PhoneNumberInput onChange={setPhoneNumber} value={phoneNumber} />
 			<Button onClick={handleLogin} disabled={!isPhoneNumberValid}>
-				자재 소요 계산하기
+				로그인
 			</Button>
 			<S.Checkbox onClick={handleToggleCheckbox}>
 				<input type="checkbox" checked={isSaved} disabled={!isPhoneNumberValid} />
-				핸드폰 번호 저장하기
+				<p>핸드폰 번호 저장할게요</p>
 			</S.Checkbox>
 		</S.Container>
 	);

@@ -6,13 +6,13 @@ const initialInputs = {
 	materials: {
 		id: "materials",
 		value: "",
-		placeholder: "자재를 입력해 주세요.",
+		placeholder: "자재를 입력해 주세요",
 		items: [],
 	},
 	cutQty: {
 		id: "cutQty",
 		value: "",
-		placeholder: "재단 수량을 입력해 주세요.",
+		placeholder: "재단 수량을 입력해 주세요",
 		items: [],
 	},
 };
