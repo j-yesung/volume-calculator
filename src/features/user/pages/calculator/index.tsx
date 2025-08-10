@@ -78,14 +78,10 @@ const Calculator = () => {
 						<>
 							<div>
 								<strong>반품 수량:</strong>{" "}
-								{output.remainingMaterials.join(", ") || "없음"}
+								{output.returnMaterials.join(", ") || "없음"}
 							</div>
 							<div>
 								<strong>총 로스량:</strong> {output.totalLoss}
-							</div>
-							<div>
-								<strong>소거되지 않은 재단(B):</strong>{" "}
-								{output.unusedCut.join(", ") || "없음"}
 							</div>
 						</>
 					)}

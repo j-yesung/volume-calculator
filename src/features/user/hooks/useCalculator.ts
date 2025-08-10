@@ -1,9 +1,8 @@
 import { InputFieldItems, CalculationOutput, MatchingResult } from "../types/items";
 
 export const useCalculator = () => {
-	const toNumbers = (arr: string[]): number[] => arr.map(parseFloat).filter((n) => !isNaN(n));
+	const toNumbers = (arr: string[]) => arr.map(parseFloat).filter((n) => !isNaN(n));
 
-	// B 인덱스 기준 모든 조합 생성 (긴 조합 우선)
 	const getIndexCombinations = (indexes: number[]) => {
 		const result: number[][] = [];
 		const dfs = (start: number, path: number[]) => {
@@ -20,26 +19,54 @@ export const useCalculator = () => {
 		const materials = toNumbers(input.materials).sort((a, b) => a - b);
 		const cutQtys = toNumbers(input.cutQty);
 
-		const sumMaterials = materials.reduce((acc, val) => acc + val, 0);
-		const sumCutQtys = cutQtys.reduce((acc, val) => acc + val, 0);
-
-		if (sumMaterials < sumCutQtys) {
+		if (materials.reduce((a, b) => a + b, 0) < cutQtys.reduce((a, b) => a + b, 0)) {
 			alert("출고된 자재가 재단 수량보다 적어요");
 			return {
 				results: [],
 				totalLoss: 0,
-				remainingMaterials: [],
+				returnMaterials: materials,
 				unusedCut: cutQtys,
 			};
 		}
 
 		const usedCutIndexes = new Set<number>();
 		const results: MatchingResult[] = [];
-		const remainingMaterials: number[] = [];
+		const returnMaterials: number[] = [];
 		let totalLoss = 0;
 
+		const checkAndApply = (
+			comboIndexes: number[],
+			material: number,
+			condition: 1 | 2 | 3 | "4-1" | "4-2",
+		) => {
+			const comboValues = comboIndexes.map((i) => cutQtys[i]);
+			const comboSum = comboValues.reduce((a, b) => a + b, 0);
+			const diff = parseFloat((material - comboSum).toFixed(3));
+
+			let isValid = false;
+			if (condition === 1) isValid = diff === 0;
+			if (condition === 2) isValid = diff > 0 && diff <= 0.5;
+			if (condition === "4-1") isValid = diff > 0.5 && diff < 2;
+			if (condition === "4-2") isValid = diff >= 2 && diff <= 3.4;
+			if (condition === 3) isValid = diff >= 3.5;
+
+			if (!isValid) return false;
+
+			comboIndexes.forEach((i) => usedCutIndexes.add(i));
+
+			results.push({
+				usedMaterial: material,
+				matchedCut: comboValues,
+				loss: condition === 1 || condition === "4-2" || condition === 3 ? 0 : diff,
+			});
+
+			if (condition === 2 || condition === "4-1") totalLoss += diff;
+			if (condition === "4-2" || condition === 3) returnMaterials.push(diff);
+
+			return true;
+		};
+
 		for (const material of materials) {
-			// 남은 B 인덱스
 			const availableIndexes = cutQtys
 				.map((_, idx) => idx)
 				.filter((idx) => !usedCutIndexes.has(idx));
@@ -47,32 +74,10 @@ export const useCalculator = () => {
 			const indexCombinations = getIndexCombinations(availableIndexes);
 			let matched = false;
 
-			for (const condition of [1, 2, 3]) {
-				for (const comboIndexes of indexCombinations) {
-					const comboValues = comboIndexes.map((idx) => cutQtys[idx]);
-					const comboSum = comboValues.reduce((acc, val) => acc + val, 0);
-					const loss = parseFloat((material - comboSum).toFixed(3));
-
-					const isCond1 = loss === 0;
-					const isCond2 = loss > 0 && loss <= 0.5;
-					const isCond3 = loss >= 3.5;
-
-					const isValid =
-						(condition === 1 && isCond1) ||
-						(condition === 2 && isCond2) ||
-						(condition === 3 && isCond3);
-
-					if (isValid) {
-						comboIndexes.forEach((idx) => usedCutIndexes.add(idx));
-
-						results.push({
-							usedMaterial: material,
-							matchedCut: comboValues,
-							loss: condition === 2 || condition === 3 ? loss : 0,
-						});
-
-						if (condition === 2 || condition === 3) totalLoss += loss;
-
+			// 조건 1 → 2
+			for (const cond of [1, 2] as const) {
+				for (const combo of indexCombinations) {
+					if (checkAndApply(combo, material, cond)) {
 						matched = true;
 						break;
 					}
@@ -80,52 +85,49 @@ export const useCalculator = () => {
 				if (matched) break;
 			}
 
-			// 조건 1~3에 실패한 경우 조건 4, 5 시도
+			// 조건 4-1 → 4-2
 			if (!matched) {
-				for (const comboIndexes of indexCombinations) {
-					const comboValues = comboIndexes.map((idx) => cutQtys[idx]);
-					const comboSum = comboValues.reduce((acc, val) => acc + val, 0);
-					const loss = parseFloat((material - comboSum).toFixed(3));
-
-					// 조건 4: (로스로 인정하고 컷팅 처리
-					if (loss > 0 && loss <= 1.9) {
-						comboIndexes.forEach((idx) => usedCutIndexes.add(idx));
-
-						results.push({
-							usedMaterial: material,
-							matchedCut: comboValues,
-							loss,
-						});
-
-						totalLoss += loss;
-						matched = true;
-						break;
-					}
-
-					// 조건 5: 잔량으로 저장, 컷팅 처리 안 함
-					if (loss >= 2 && loss <= 3.4) {
-						// 컷팅하지 않고 A를 잔량 처리
-						remainingMaterials.push(material);
+				for (const combo of indexCombinations) {
+					if (
+						checkAndApply(combo, material, "4-1") ||
+						checkAndApply(combo, material, "4-2")
+					) {
 						matched = true;
 						break;
 					}
 				}
 			}
 
-			// 조건 1~5 모두 실패하면 A를 잔량으로 저장
+			// 마지막으로 조건 3 (3.5 이상 차이)
 			if (!matched) {
-				remainingMaterials.push(material);
+				for (const combo of indexCombinations) {
+					if (checkAndApply(combo, material, 3)) {
+						matched = true;
+						break;
+					}
+				}
 			}
+
+			if (!matched) returnMaterials.push(material);
 		}
 
-		// 사용되지 않은 B
 		const unusedCut = cutQtys.filter((_, idx) => !usedCutIndexes.has(idx));
+
+		if (unusedCut.length > 0) {
+			alert("자재가 부족해요");
+			return {
+				results: [],
+				totalLoss: 0,
+				returnMaterials: materials,
+				unusedCut: cutQtys,
+			};
+		}
 
 		return {
 			results,
 			totalLoss: parseFloat(totalLoss.toFixed(2)),
-			remainingMaterials,
-			unusedCut,
+			returnMaterials,
+			unusedCut: [],
 		};
 	};
 
