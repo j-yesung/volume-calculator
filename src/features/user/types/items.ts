@@ -26,9 +26,9 @@ export type MatchingResult = {
 	loss: number;
 };
 
-export type CalculationOutput = {
-	results: MatchingResult[]; // A와 B의 매칭 결과
-	totalLoss: number; // 총 로스량
-	remainingMaterials: number[]; // 컷팅 불가 잔량 A
-	unusedCut: number[]; // 사용되지 않은 B
-};
+export interface CalculationOutput {
+	results: MatchingResult[];
+	totalLoss: number;
+	returnMaterials: number[];
+	unusedCut: number[];
+}

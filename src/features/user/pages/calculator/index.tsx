@@ -26,12 +26,19 @@ const Calculator = () => {
 		},
 	];
 
+	const outputCondition = output && output.results.length > 0;
+
 	const handleCalculate = () => {
 		const results = calculate({
 			materials: inputs.materials.items,
 			cutQty: inputs.cutQty.items,
 		});
 		setOutput(results);
+	};
+
+	const resetOutput = () => {
+		setOutput(undefined);
+		resetCalculator();
 	};
 
 	return (
@@ -52,7 +59,7 @@ const Calculator = () => {
 			<S.DisplayWrapper $shouldFlex>
 				<span>계산 결과 및 잔량</span>
 				<S.Content>
-					{output && output.results.length > 0 && (
+					{outputCondition && (
 						<div>
 							<strong>계산 결과:</strong>
 							<ul>
@@ -67,25 +74,21 @@ const Calculator = () => {
 					)}
 				</S.Content>
 				<S.Content>
-					{output && (
+					{outputCondition && (
 						<>
 							<div>
 								<strong>반품 수량:</strong>{" "}
-								{output.remainingMaterials.join(", ") || "없음"}
+								{output.returnMaterials.join(", ") || "없음"}
 							</div>
 							<div>
 								<strong>총 로스량:</strong> {output.totalLoss}
-							</div>
-							<div>
-								<strong>소거되지 않은 재단(B):</strong>{" "}
-								{output.unusedCut.join(", ") || "없음"}
 							</div>
 						</>
 					)}
 				</S.Content>
 			</S.DisplayWrapper>
 			<S.ButtonWrapper>
-				<ActionButtons onCalculate={handleCalculate} onReset={resetCalculator} />
+				<ActionButtons onCalculate={handleCalculate} onReset={resetOutput} />
 			</S.ButtonWrapper>
 		</S.CalculatorContainer>
 	);
