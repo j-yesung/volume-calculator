@@ -1,6 +1,6 @@
 {
 	"files": [],
-	"include": ["src"],
+	"include": ["src", "vite.config.ts", "vite-env.d.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }],
 	"compilerOptions": {
 		"target": "ESNext",
@@ -10,12 +10,14 @@
 		"skipLibCheck": true,
 		"allowJs": true,
 
-		/* Bundler mode */
+		/* Bundler mode (Vite/ESM) */
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
+
+		/* React + Emotion */
 		"jsx": "react-jsx",
 		"jsxImportSource": "@emotion/react",
 
@@ -25,9 +27,11 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
 
+		/* Paths/Types */
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./src/*"]
-		}
+		},
+		"types": ["vite/client"]
 	}
 }
