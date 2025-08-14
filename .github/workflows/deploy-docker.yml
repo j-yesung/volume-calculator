@@ -38,6 +38,15 @@ jobs:
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
 
+                  # Buildx 활성화 (캐시 export/use 위해 필수)
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v3
+              with:
+                  install: true
+                  driver: docker-container
+                  driver-opts: |
+                             image=moby/buildkit:latest
+
             # Docker Build & Push
             - name: Build & Push Image
               uses: docker/build-push-action@v6
