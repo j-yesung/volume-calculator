@@ -77,28 +77,35 @@ jobs:
               uses: appleboy/ssh-action@v1.2.0
               env:
                   IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+                  HOST_PORT: ${{ secrets.HOST_PORT }}
               with:
                   host: ${{ secrets.EC2_HOST }}
                   username: ${{ secrets.EC2_USER }}
                   port: ${{ secrets.EC2_PORT || 22 }}
                   key: ${{ secrets.EC2_SSH_KEY }}
-                  envs: IMAGE_NAME
+                  envs: IMAGE_NAME,HOST_PORT
                   script_stop: true
                   script: |
                           set -euo pipefail
             
-                          # 필수값 체크
                           : "${IMAGE_NAME:?IMAGE_NAME is required}"
+                          
                           APP_NAME="selekhome"
+                          HOST_PORT="${HOST_PORT:-8081}"
                           IMAGE="${IMAGE_NAME}:latest"
+                                                    
                           echo "[1/4] Pull image: $IMAGE"
                           docker pull "$IMAGE"
+                          
                           echo "[2/4] Stop & remove old container (if exists)"
                           docker rm -f "$APP_NAME" 2>/dev/null || true
+                          
                           echo "[3/4] Run new container"
                           docker run -d --name "$APP_NAME" --restart unless-stopped \
-                            -p 127.0.0.1:8080:80 \
+                            -p 127.0.0.1:${HOST_PORT}:80 \
                             "$IMAGE"
+                            
                           echo "[4/4] Cleanup dangling images"
                           docker image prune -f
+                          
                           echo "Deployment completed!"
