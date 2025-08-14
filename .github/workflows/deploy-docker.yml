@@ -4,6 +4,10 @@ on:
     push:
         branches: [main]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
     build-and-push:
         runs-on: ubuntu-latest
@@ -38,7 +42,7 @@ jobs:
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
 
-                  # Buildx 활성화 (캐시 export/use 위해 필수)
+            # Buildx 활성화 (캐시 export/use 위해 필수)
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3
               with:
@@ -55,8 +59,8 @@ jobs:
                   file: ./Dockerfile
                   push: true
                   tags: |
-                      ${{ secrets.IMAGE_NAME }}:latest
-                      ${{ secrets.IMAGE_NAME }}:${{ github.sha }}
+                      ghcr.io/j-yesung/volume-calculator:latest
+                      ghcr.io/j-yesung/volume-calculator:${{ github.sha }}
                   cache-from: type=gha
                   cache-to: type=gha,mode=max
 
