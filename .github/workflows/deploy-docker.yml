@@ -48,8 +48,8 @@ jobs:
                   tags: |
                       ${{ secrets.IMAGE_NAME }}:latest
                       ${{ secrets.IMAGE_NAME }}:${{ github.sha }}
-                  cache-from: type=registry,ref=${{ secrets.IMAGE_NAME }}:buildcache
-                  cache-to: type=registry,ref=${{ secrets.IMAGE_NAME }}:buildcache,mode=max
+                  cache-from: type=gha
+                  cache-to: type=gha,mode=max
 
     deploy:
         needs: build-and-push
