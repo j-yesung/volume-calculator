@@ -1,17 +1,16 @@
-import { HTMLAttributes } from "react";
+import { InputHTMLAttributes } from "react";
 
 import * as S from "./style";
 
-interface InputProps extends HTMLAttributes<HTMLInputElement> {
+interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 	ref?: React.Ref<HTMLInputElement>;
-	placeholder?: string;
 	value?: string;
 	disabled?: boolean;
 	className?: string;
 	maxLength?: number;
-	size?: "s" | "m";
+	inputSize?: "s" | "m";
 	type?: string;
 	isInvalid?: boolean;
 	isReadOnly?: boolean;
@@ -21,12 +20,11 @@ const Input = ({
 	onChange,
 	onEnter,
 	ref,
-	placeholder,
 	value,
 	disabled = false,
 	className,
 	maxLength,
-	size = "s",
+	inputSize = "s",
 	type = "text",
 	isInvalid = false,
 	isReadOnly = false,
@@ -39,12 +37,11 @@ const Input = ({
 			className={`c__input ${className ?? ""}`}
 			onChange={onChange}
 			onKeyDown={onEnter}
-			placeholder={placeholder}
 			value={value}
 			disabled={disabled}
 			maxLength={maxLength}
 			readOnly={isReadOnly}
-			$size={size}
+			$size={inputSize}
 			{...rest}
 		/>
 	);
