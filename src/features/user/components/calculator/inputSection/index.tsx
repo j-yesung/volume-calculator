@@ -36,6 +36,8 @@ const InputSection = ({
 				onBlur={onSubmit}
 				value={value}
 				placeholder={placeholder}
+				inputMode="decimal"
+				pattern="[0-9]*[.,]?[0-9]*" // 숫자랑 "." 포함
 			/>
 			{items.length > 0 && (
 				<S.TagWrapper>
