@@ -24,7 +24,7 @@ const fadeOutDown = keyframes`
   }
   100% {
     opacity: 0;
-    transform: translateX(-50%) translateY(30px);
+    transform: translateX(-50%) translateY(70px);
   }
 `;
 
